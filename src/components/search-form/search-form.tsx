@@ -2,7 +2,7 @@ import { SyntheticEvent } from 'react';
 
 import './search-form.scss';
 
-function SearchBar() {
+function SearchForm() {
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
   };
@@ -15,4 +15,4 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+export default SearchForm;

@@ -1,16 +1,19 @@
-import logo from './logo.svg';
-import SearchForm from './components/search-form/search-form';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import './App.css';
+import Home from './features/home/home';
+import Search from './features/search/search';
+
+import './App.scss';
 
 function App() {
   return (
     <div className="app">
-      <header className="app-header">
-        <img src={logo} className="app-logo" alt="logo" />
-
-        <SearchForm />
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
