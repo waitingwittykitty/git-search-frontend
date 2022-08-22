@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Get Search Frontend
+
+> This is a simple app to search git repos by owner and repo name.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
