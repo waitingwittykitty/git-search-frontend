@@ -3,33 +3,30 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import Pagination from '../../components/pagination/pagination';
-import SearchForm from '../../components/search-form/search-form';
 import Spinner from '../../components/spinner/spinner';
 import {
-  fetchForksCountAsync,
-  Fork,
-  searchAsync,
-  selectSearchLoading,
-  selectSearchPageCount,
-  selectSearchResult,
-} from './search-reducer';
+  fetchFavoritesCountAsync,
+  fetchFavoritesAsync,
+  selectFavoritesLoading,
+  selectFavoritesPageCount,
+  selectFavoritesResult,
+} from './favorites-reducer';
 
-import './search.scss';
+import './favorites.scss';
 
-function Search() {
-  const result = useAppSelector(selectSearchResult);
-  const loading = useAppSelector(selectSearchLoading);
+function Favorites() {
+  const result = useAppSelector(selectFavoritesResult);
+  const loading = useAppSelector(selectFavoritesLoading);
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('word') || '';
   const page = Number(searchParams.get('page')) || 1;
   const perPage = Number(searchParams.get('height')) || 10;
-  const pageCount = useAppSelector(selectSearchPageCount(perPage));
+  const pageCount = useAppSelector(selectFavoritesPageCount(perPage));
 
   useEffect(() => {
-    dispatch(searchAsync({ query, page, perPage }));
-    dispatch(fetchForksCountAsync(query));
-  }, [dispatch, query, page, perPage]);
+    dispatch(fetchFavoritesAsync({ page, perPage }));
+    dispatch(fetchFavoritesCountAsync());
+  }, [dispatch, page, perPage]);
 
   const handleChangePage = (page: number) => {
     setSearchParams({
@@ -38,13 +35,11 @@ function Search() {
     });
   };
 
-  const handleAddFavorite = (fork: Fork) => () => {};
+  const handleRemoveFavorite = (forkId: number) => () => {};
 
   return (
     <section>
       <Spinner visible={loading} />
-
-      <SearchForm />
 
       <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
 
@@ -68,7 +63,9 @@ function Search() {
                 <a href={fork.link}>{fork.link}</a>
               </td>
               <td>
-                <button onClick={handleAddFavorite(fork)}>Add to Favorites</button>
+                <button onClick={handleRemoveFavorite(fork.id)}>
+                  Remove from Favorites
+                </button>
               </td>
             </tr>
           ))}
@@ -78,4 +75,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default Favorites;
