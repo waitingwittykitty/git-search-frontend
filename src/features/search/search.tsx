@@ -2,9 +2,16 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import Pagination from '../../components/pagination/pagination';
 import SearchForm from '../../components/search-form/search-form';
 import Spinner from '../../components/spinner/spinner';
-import { searchAsync, selectSearchLoading, selectSearchResult } from './search-reducer';
+import {
+  fetchForksCountAsync,
+  searchAsync,
+  selectSearchLoading,
+  selectSearchPageCount,
+  selectSearchResult,
+} from './search-reducer';
 
 import './search.scss';
 
@@ -12,17 +19,31 @@ function Search() {
   const result = useAppSelector(selectSearchResult);
   const loading = useAppSelector(selectSearchLoading);
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('word') || '';
+  const page = Number(searchParams.get('page')) || 1;
+  const perPage = Number(searchParams.get('height')) || 10;
+  const pageCount = useAppSelector(selectSearchPageCount(perPage));
 
   useEffect(() => {
-    dispatch(searchAsync(searchParams.get('word') ?? ''));
-  }, [dispatch, searchParams]);
+    dispatch(searchAsync({ query, page, perPage }));
+    dispatch(fetchForksCountAsync(query));
+  }, [dispatch, query, page, perPage]);
+
+  const handleChangePage = (page: number) => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: page.toString(),
+    });
+  };
 
   return (
     <section>
       <Spinner visible={loading} />
 
       <SearchForm />
+
+      <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
 
       <table>
         <thead>
