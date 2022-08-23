@@ -3,12 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import SearchForm from '../../components/search-form/search-form';
-import { searchAsync, selectSearchResult } from './search-reducer';
+import Spinner from '../../components/spinner/spinner';
+import { searchAsync, selectSearchLoading, selectSearchResult } from './search-reducer';
 
 import './search.scss';
 
 function Search() {
   const result = useAppSelector(selectSearchResult);
+  const loading = useAppSelector(selectSearchLoading);
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
 
@@ -18,6 +20,8 @@ function Search() {
 
   return (
     <section>
+      <Spinner visible={loading} />
+
       <SearchForm />
 
       <table>
@@ -30,8 +34,8 @@ function Search() {
           </tr>
         </thead>
         <tbody>
-          {result.map((fork, index) => (
-            <tr key={index}>
+          {result.map(fork => (
+            <tr key={fork.id}>
               <td>{fork.name}</td>
               <td>{fork.owner}</td>
               <td>{fork.stars}</td>

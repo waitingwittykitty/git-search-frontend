@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 
@@ -8,6 +8,10 @@ function SearchForm() {
   const [word, setWord] = useState('');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    setWord(searchParams.get('word') ?? '');
+  }, [searchParams]);
 
   const handleChangeWord = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWord(event.target.value);

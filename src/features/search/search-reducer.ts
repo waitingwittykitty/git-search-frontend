@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { search } from './search-api';
+import { searchForks } from './search-api';
 
 export type Fork = {
+  id: number;
   name: string;
   owner: string;
   stars: number;
@@ -26,9 +27,11 @@ const initialState: SearchState = {
 };
 
 export const searchAsync = createAsyncThunk('search/search', async (query: string) => {
-  const response = await search(query);
+  const [owner, repo] = query.split('/');
 
-  return response.data;
+  const forks = await searchForks({ owner, repo, page: 1, perPage: 10 });
+
+  return forks;
 });
 
 export const SearchSlice = createSlice({
@@ -51,5 +54,8 @@ export const SearchSlice = createSlice({
 });
 
 export const selectSearchResult = (state: RootState) => state.search.result;
+export const selectSearchLoading = (state: RootState) =>
+  state.search.status === 'loading';
+export const selectSearchFailed = (state: RootState) => state.search.status === 'failed';
 
 export default SearchSlice.reducer;
