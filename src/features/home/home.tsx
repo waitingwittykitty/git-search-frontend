@@ -8,6 +8,8 @@ function Home() {
     <section className="home">
       <img src={Logo} className="app-logo" alt="logo" />
 
+      <h1>Welcome to Git Search!</h1>
+
       <SearchForm />
     </section>
   );

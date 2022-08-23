@@ -5,6 +5,8 @@ import { search } from './search-api';
 export type Fork = {
   name: string;
   owner: string;
+  stars: number;
+  link: string;
 };
 
 export interface SearchState {
