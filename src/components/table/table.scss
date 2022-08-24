@@ -13,7 +13,8 @@
   border-collapse: collapse;
 
   thead {
-    tr, th {
+    tr,
+    th {
       padding-bottom: 30px;
       border-top: none;
       border-bottom: none;
@@ -27,25 +28,26 @@
   }
 
   tbody {
+    min-height: 420px;
+
     tr {
-      -webkit-transition: .3s all ease;
-      -o-transition: .3s all ease;
-      transition: .3s all ease;
+      -webkit-transition: 0.3s all ease;
+      -o-transition: 0.3s all ease;
+      transition: 0.3s all ease;
 
       &:nth-of-type(odd) {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: rgba(#d3d5f2, 0.5);
       }
 
       td {
         color: #777;
         font-weight: 400;
         padding: 20px 0.75rem;
-        vertical-align: top;
         font-weight: 300;
         border: none;
-        -webkit-transition: .3s all ease;
-        -o-transition: .3s all ease;
-        transition: .3s all ease;
+        -webkit-transition: 0.3s all ease;
+        -o-transition: 0.3s all ease;
+        transition: 0.3s all ease;
       }
     }
   }
