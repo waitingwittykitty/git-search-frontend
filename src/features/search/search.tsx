@@ -16,6 +16,7 @@ import {
   selectSearchLoading,
   selectSearchPageCount,
   selectSearchResult,
+  selectSearchTotal,
 } from './search-reducer';
 
 import './search.scss';
@@ -28,6 +29,7 @@ function Search() {
   const query = searchParams.get('word') || '';
   const page = Number(searchParams.get('page')) || 1;
   const perPage = Number(searchParams.get('height')) || 10;
+  const total = useAppSelector(selectSearchTotal);
   const pageCount = useAppSelector(selectSearchPageCount(perPage));
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
   const [selectedFork, setSelectedFork] = useState<Fork | null>(null);
@@ -65,12 +67,16 @@ function Search() {
     <section className="container page-container page-search">
       <Spinner visible={loading} />
 
-      <Pagination
-        total={pageCount}
-        page={page}
-        onChangePage={handleChangePage}
-        buttonAs={Button}
-      />
+      <header className="page-header">
+        <p>{total} results</p>
+
+        <Pagination
+          total={pageCount}
+          page={page}
+          onChangePage={handleChangePage}
+          buttonAs={Button}
+        />
+      </header>
 
       <Table>
         <thead>
@@ -100,6 +106,13 @@ function Search() {
           ))}
         </tbody>
       </Table>
+
+      <Pagination
+        total={pageCount}
+        page={page}
+        onChangePage={handleChangePage}
+        buttonAs={Button}
+      />
 
       <Modal isOpened={isConfirmOpened} toggle={toggleConfirm}>
         <Confirm
