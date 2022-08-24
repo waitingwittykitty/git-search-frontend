@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import Button from '../../components/button/button';
 import Confirm from '../../components/confirm/confirm';
 import Modal from '../../components/modal/modal';
 import Pagination from '../../components/pagination/pagination';
 import SearchForm from '../../components/search-form/search-form';
 import Spinner from '../../components/spinner/spinner';
+import Table from '../../components/table/table';
 import { addFavoriteAsync } from '../favorites/favorites-reducer';
 import {
   fetchForksCountAsync,
@@ -59,14 +61,14 @@ function Search() {
   };
 
   return (
-    <section>
+    <section className="container">
       <Spinner visible={loading} />
 
       <SearchForm />
 
       <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
 
-      <table>
+      <Table>
         <thead>
           <tr>
             <th>Name</th>
@@ -86,12 +88,14 @@ function Search() {
                 <a href={fork.link}>{fork.link}</a>
               </td>
               <td>
-                <button onClick={handleAddFavorite(fork)}>Add to Favorites</button>
+                <Button className="button" onClick={handleAddFavorite(fork)}>
+                  Add to Favorites
+                </Button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
 
       <Modal isOpened={isConfirmOpened} toggle={toggleConfirm}>
         <Confirm

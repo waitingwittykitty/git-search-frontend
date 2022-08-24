@@ -1,0 +1,21 @@
+.button {
+  background-color: #2ac4ea;
+  border-radius: 3px;
+  padding: 10px 15px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #fff;
+  position: relative;
+  text-transform: uppercase;
+  top: -3px;
+  margin-bottom: 10px;
+  opacity: 0.75;
+  line-height: 20px;
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}

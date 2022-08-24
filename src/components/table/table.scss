@@ -1,0 +1,52 @@
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  min-width: 900px;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  border-collapse: collapse;
+
+  thead {
+    tr, th {
+      padding-bottom: 30px;
+      border-top: none;
+      border-bottom: none;
+      color: #000;
+    }
+
+    th {
+      padding: 0.75rem;
+      vertical-align: bottom;
+    }
+  }
+
+  tbody {
+    tr {
+      -webkit-transition: .3s all ease;
+      -o-transition: .3s all ease;
+      transition: .3s all ease;
+
+      &:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      td {
+        color: #777;
+        font-weight: 400;
+        padding: 20px 0.75rem;
+        vertical-align: top;
+        font-weight: 300;
+        border: none;
+        -webkit-transition: .3s all ease;
+        -o-transition: .3s all ease;
+        transition: .3s all ease;
+      }
+    }
+  }
+}
