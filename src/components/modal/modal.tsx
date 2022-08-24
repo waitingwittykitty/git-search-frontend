@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 
+import Button from '../button/button';
+
 import './modal.scss';
 
 export interface ModalProps {
@@ -10,9 +12,14 @@ export interface ModalProps {
 
 function Modal({ isOpened, toggle, children }: ModalProps) {
   return (
-    <div className={clsx('modal-container', { opened: isOpened })}>
-      <button onClick={toggle}>X</button>
-      <div>{children}</div>
+    <div className={clsx('modal', { opened: isOpened })}>
+      <div className="modal-content">
+        <Button className="close" onClick={toggle}>
+          X
+        </Button>
+
+        <div>{children}</div>
+      </div>
     </div>
   );
 }

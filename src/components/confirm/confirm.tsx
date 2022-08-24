@@ -1,3 +1,7 @@
+import Button from '../button/button';
+
+import './confirm.scss';
+
 export interface ConfirmProps {
   title?: string;
   description?: string;
@@ -21,10 +25,12 @@ function Confirm({ title, description, onOk, onCancel, toggle }: ConfirmProps) {
     <section className="confirm">
       <h2>{title}</h2>
       <p>{description}</p>
-      <button autoFocus onClick={handleOk}>
-        Yes
-      </button>
-      <button onClick={handleCancel}>No</button>
+      <footer>
+        <Button autoFocus onClick={handleOk}>
+          Yes
+        </Button>
+        <Button onClick={handleCancel}>No</Button>
+      </footer>
     </section>
   );
 }
