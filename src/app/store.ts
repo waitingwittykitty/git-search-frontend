@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import notificationReducer from '../components/notification/notification-reducer';
 import favoritesReducer from '../features/favorites/favorites-reducer';
 import searchReducer from '../features/search/search-reducer';
 
@@ -6,6 +7,7 @@ export const store = configureStore({
   reducer: {
     search: searchReducer,
     favorites: favoritesReducer,
+    notification: notificationReducer,
   },
 });
 

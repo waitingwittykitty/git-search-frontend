@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import Button from '../../components/button/button';
 import Confirm from '../../components/confirm/confirm';
 import Modal from '../../components/modal/modal';
+import { notify } from '../../components/notification/notification-reducer';
 import Pagination from '../../components/pagination/pagination';
 import Spinner from '../../components/spinner/spinner';
 import Table from '../../components/table/table';
@@ -53,9 +54,10 @@ function Search() {
     setSelectedFork(fork);
   };
 
-  const handleConfirmAddFavorite = () => {
+  const handleConfirmAddFavorite = async () => {
     if (selectedFork) {
-      dispatch(addFavoriteAsync(selectedFork));
+      await dispatch(addFavoriteAsync(selectedFork));
+      dispatch(notify({ title: 'Success', description: 'Added successfully' }));
     }
   };
 

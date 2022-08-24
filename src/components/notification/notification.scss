@@ -1,14 +1,12 @@
-.modal {
+.notification-container {
   display: block;
   pointer-events: none;
   position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 2;
+  right: 20px;
+  top: 20px;
+  width: 200px;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
   transition: ease all 0.3s;
 
@@ -18,18 +16,17 @@
     opacity: 1;
   }
 
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
+  .notification-content {
+    background-color: #abb2e1;
+    color: white;
     padding: 20px;
-    border: 1px solid #888;
     width: 80%;
   }
 
   .close {
     color: white;
     float: right;
-    font-size: 28px;
+    font-size: 12px;
     font-weight: bold;
   }
 

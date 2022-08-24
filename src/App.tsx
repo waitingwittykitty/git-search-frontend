@@ -4,6 +4,7 @@ import Favorites from './features/favorites/favorites';
 import Home from './features/home/home';
 import Search from './features/search/search';
 import Navbar from './layouts/navbar/navbar';
+import NotificationContainer from './components/notification/notification';
 
 import './App.scss';
 
@@ -19,6 +20,8 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+
+        <NotificationContainer />
       </BrowserRouter>
     </div>
   );
