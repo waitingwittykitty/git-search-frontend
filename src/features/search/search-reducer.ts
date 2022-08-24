@@ -71,6 +71,7 @@ export const SearchSlice = createSlice({
       })
       .addCase(searchAsync.rejected, state => {
         state.status = 'failed';
+        state.result = [];
       })
       .addCase(fetchForksCountAsync.pending, state => {
         state.status = 'loading';
@@ -81,6 +82,7 @@ export const SearchSlice = createSlice({
       })
       .addCase(fetchForksCountAsync.rejected, state => {
         state.status = 'failed';
+        state.total = 0;
       });
   },
 });

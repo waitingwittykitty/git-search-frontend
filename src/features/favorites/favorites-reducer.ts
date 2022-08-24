@@ -72,6 +72,7 @@ export const FavoritesSlice = createSlice({
       })
       .addCase(fetchFavoritesAsync.rejected, state => {
         state.status = 'failed';
+        state.result = [];
       })
       .addCase(fetchFavoritesCountAsync.pending, state => {
         state.status = 'loading';
@@ -82,6 +83,7 @@ export const FavoritesSlice = createSlice({
       })
       .addCase(fetchFavoritesCountAsync.rejected, state => {
         state.status = 'failed';
+        state.total = 0;
       });
   },
 });
