@@ -1,0 +1,40 @@
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  height: 60px;
+  box-sizing: border-box;
+
+  ul {
+    margin-left: auto;
+    display: flex;
+    padding-right: 4px;
+
+    li {
+      list-style: none;
+      padding: 0 8px;
+
+      a {
+        display: inline-block;
+        line-height: 24px;
+        vertical-align: middle;
+        color: rgba(0, 0, 0, 0.87);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        &.active {
+          color: #2ac4ea;
+          pointer-events: none;
+          cursor: default;
+        }
+      }
+    }
+  }
+}

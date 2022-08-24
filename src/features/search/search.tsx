@@ -6,7 +6,6 @@ import Button from '../../components/button/button';
 import Confirm from '../../components/confirm/confirm';
 import Modal from '../../components/modal/modal';
 import Pagination from '../../components/pagination/pagination';
-import SearchForm from '../../components/search-form/search-form';
 import Spinner from '../../components/spinner/spinner';
 import Table from '../../components/table/table';
 import { addFavoriteAsync } from '../favorites/favorites-reducer';
@@ -61,10 +60,8 @@ function Search() {
   };
 
   return (
-    <section className="container">
+    <section className="container page-container">
       <Spinner visible={loading} />
-
-      <SearchForm />
 
       <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
 

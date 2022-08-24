@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Favorites from './features/favorites/favorites';
 import Home from './features/home/home';
 import Search from './features/search/search';
-import Navbar from './components/navbar/navbar';
+import Navbar from './layouts/navbar/navbar';
 
 import './App.scss';
 

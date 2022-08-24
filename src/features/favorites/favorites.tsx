@@ -36,7 +36,7 @@ function Favorites() {
   };
 
   return (
-    <section>
+    <section className="container page-container">
       <Spinner visible={loading} />
 
       <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
