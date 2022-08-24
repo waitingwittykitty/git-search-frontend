@@ -1,5 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
+
 import SearchForm from '../../components/search-form/search-form';
+import Logo from '../../logo.svg';
 
 import './navbar.scss';
 
@@ -14,6 +16,8 @@ function Navbar({ children }: NavbarProps) {
 
   return (
     <nav className="navbar">
+      <img height="36" src={Logo} className="navbar-logo" alt="logo" />
+
       {shouldShowSearchForm && <SearchForm />}
 
       <ul>

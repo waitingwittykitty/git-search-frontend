@@ -9,6 +9,11 @@
   height: 60px;
   box-sizing: border-box;
 
+  .navbar-logo {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
   ul {
     margin-left: auto;
     display: flex;
