@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { fetchFavoritesCount, fetchFavorites } from './favorites-api';
+import {
+  fetchFavoritesCount,
+  fetchFavorites,
+  addFavorite,
+  removeFavorite,
+} from './favorites-api';
 
 export type Fork = {
   id: number;
@@ -40,6 +45,17 @@ export const fetchFavoritesCountAsync = createAsyncThunk('favorites/count', asyn
 
   return count;
 });
+
+export const addFavoriteAsync = createAsyncThunk('favorites/add', async (fork: Fork) => {
+  await addFavorite(fork);
+});
+
+export const removeFavoriteAsync = createAsyncThunk(
+  'favorites/remove',
+  async (forkId: number) => {
+    await removeFavorite(forkId);
+  }
+);
 
 export const FavoritesSlice = createSlice({
   name: 'Favorites',

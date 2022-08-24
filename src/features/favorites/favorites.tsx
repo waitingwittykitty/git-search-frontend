@@ -35,8 +35,6 @@ function Favorites() {
     });
   };
 
-  const handleRemoveFavorite = (forkId: number) => () => {};
-
   return (
     <section>
       <Spinner visible={loading} />
@@ -50,7 +48,6 @@ function Favorites() {
             <th>Owner</th>
             <th>Stars</th>
             <th>Link</th>
-            <th>Favorite</th>
           </tr>
         </thead>
         <tbody>
@@ -61,11 +58,6 @@ function Favorites() {
               <td>{fork.stars}</td>
               <td>
                 <a href={fork.link}>{fork.link}</a>
-              </td>
-              <td>
-                <button onClick={handleRemoveFavorite(fork.id)}>
-                  Remove from Favorites
-                </button>
               </td>
             </tr>
           ))}

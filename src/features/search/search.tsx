@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import Confirm from '../../components/confirm/confirm';
+import Modal from '../../components/modal/modal';
 import Pagination from '../../components/pagination/pagination';
 import SearchForm from '../../components/search-form/search-form';
 import Spinner from '../../components/spinner/spinner';
+import { addFavoriteAsync } from '../favorites/favorites-reducer';
 import {
   fetchForksCountAsync,
   Fork,
@@ -25,6 +28,8 @@ function Search() {
   const page = Number(searchParams.get('page')) || 1;
   const perPage = Number(searchParams.get('height')) || 10;
   const pageCount = useAppSelector(selectSearchPageCount(perPage));
+  const [isConfirmOpened, setIsConfirmOpened] = useState(false);
+  const [selectedFork, setSelectedFork] = useState<Fork | null>(null);
 
   useEffect(() => {
     dispatch(searchAsync({ query, page, perPage }));
@@ -38,7 +43,20 @@ function Search() {
     });
   };
 
-  const handleAddFavorite = (fork: Fork) => () => {};
+  const handleAddFavorite = (fork: Fork) => () => {
+    setIsConfirmOpened(true);
+    setSelectedFork(fork);
+  };
+
+  const handleConfirmAddFavorite = () => {
+    if (selectedFork) {
+      dispatch(addFavoriteAsync(selectedFork));
+    }
+  };
+
+  const toggleConfirm = () => {
+    setIsConfirmOpened(isConfirmOpened => !isConfirmOpened);
+  };
 
   return (
     <section>
@@ -74,6 +92,15 @@ function Search() {
           ))}
         </tbody>
       </table>
+
+      <Modal isOpened={isConfirmOpened} toggle={toggleConfirm}>
+        <Confirm
+          title="Add to Favorite"
+          description={`Are you sure you want to add this fork (${selectedFork?.owner}/${selectedFork?.name}) to your favorites?`}
+          onOk={handleConfirmAddFavorite}
+          toggle={toggleConfirm}
+        />
+      </Modal>
     </section>
   );
 }

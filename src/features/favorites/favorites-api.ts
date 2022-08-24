@@ -24,18 +24,22 @@ export async function fetchFavoritesCount(): Promise<number> {
 
 export async function addFavorite(fork: Fork) {
   const favoritesData = localStorage.getItem('git-search:favorites');
-  const forks = favoritesData ? JSON.parse(favoritesData) : { data: [], count: 0 };
+  const favorites = favoritesData ? JSON.parse(favoritesData) : { data: [], count: 0 };
 
-  forks?.data.push(fork);
-  forks.count++;
-  localStorage.setItem('git-search:favorites', JSON.stringify(forks));
+  const isNewFavorite = favorites.data.every((favorite: Fork) => favorite.id !== fork.id);
+
+  if (isNewFavorite) {
+    favorites.data.push(fork);
+    favorites.count++;
+    localStorage.setItem('git-search:favorites', JSON.stringify(favorites));
+  }
 }
 
 export async function removeFavorite(forkId: number) {
   const favoritesData = localStorage.getItem('git-search:favorites');
-  const forks = favoritesData ? JSON.parse(favoritesData) : { data: [], count: 0 };
+  const favorites = favoritesData ? JSON.parse(favoritesData) : { data: [], count: 0 };
 
-  forks.data = forks.data.filter((fork: Fork) => fork.id !== forkId);
-  forks.count--;
-  localStorage.setItem('git-search:favorites', JSON.stringify(forks));
+  favorites.data = favorites.data.filter((favorite: Fork) => favorite.id !== forkId);
+  favorites.count = favorites.data.length;
+  localStorage.setItem('git-search:favorites', JSON.stringify(favorites));
 }

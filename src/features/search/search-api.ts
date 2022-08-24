@@ -30,7 +30,7 @@ export async function searchForks({
 
   return forks.data.map(fork => ({
     id: fork.id,
-    name: fork.full_name,
+    name: fork.name,
     owner: fork.owner.login,
     stars: fork.stargazers_count ?? 0,
     link: fork.clone_url ?? '',
