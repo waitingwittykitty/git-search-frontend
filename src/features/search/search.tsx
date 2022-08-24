@@ -68,7 +68,9 @@ function Search() {
       <Spinner visible={loading} />
 
       <header className="page-header">
-        <p>{total} results</p>
+        <p>
+          {total} {total === 1 ? 'result' : 'results'}
+        </p>
 
         <Pagination
           total={pageCount}
@@ -89,21 +91,27 @@ function Search() {
           </tr>
         </thead>
         <tbody>
-          {result.map(fork => (
-            <tr key={fork.id}>
-              <td>{fork.name}</td>
-              <td>{fork.owner}</td>
-              <td>{fork.stars}</td>
-              <td>
-                <a href={fork.link}>{fork.link}</a>
-              </td>
-              <td>
-                <Button className="button" onClick={handleAddFavorite(fork)}>
-                  Add to Favorites
-                </Button>
-              </td>
+          {result && result.length > 0 ? (
+            result.map(fork => (
+              <tr key={fork.id}>
+                <td>{fork.name}</td>
+                <td>{fork.owner}</td>
+                <td>{fork.stars}</td>
+                <td>
+                  <a href={fork.link}>{fork.link}</a>
+                </td>
+                <td>
+                  <Button className="button" onClick={handleAddFavorite(fork)}>
+                    Add to Favorites
+                  </Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5}>No results</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
 
