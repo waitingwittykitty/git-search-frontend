@@ -33,8 +33,10 @@ function Search() {
   const [selectedFork, setSelectedFork] = useState<Fork | null>(null);
 
   useEffect(() => {
-    dispatch(searchAsync({ query, page, perPage }));
-    dispatch(fetchForksCountAsync(query));
+    if (query) {
+      dispatch(searchAsync({ query, page, perPage }));
+      dispatch(fetchForksCountAsync(query));
+    }
   }, [dispatch, query, page, perPage]);
 
   const handleChangePage = (page: number) => {
