@@ -1,5 +1,7 @@
 import React, { BaseHTMLAttributes, ButtonHTMLAttributes } from 'react';
 
+import './pagination.scss';
+
 const DefaultButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = props => (
   <button {...props}>{props.children}</button>
 );

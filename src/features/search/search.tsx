@@ -62,10 +62,15 @@ function Search() {
   };
 
   return (
-    <section className="container page-container">
+    <section className="container page-container page-search">
       <Spinner visible={loading} />
 
-      <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
+      <Pagination
+        total={pageCount}
+        page={page}
+        onChangePage={handleChangePage}
+        buttonAs={Button}
+      />
 
       <Table>
         <thead>

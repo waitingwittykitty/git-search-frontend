@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import Button from '../../components/button/button';
 import Pagination from '../../components/pagination/pagination';
 import Spinner from '../../components/spinner/spinner';
+import Table from '../../components/table/table';
 import {
   fetchFavoritesCountAsync,
   fetchFavoritesAsync,
@@ -36,12 +38,17 @@ function Favorites() {
   };
 
   return (
-    <section className="container page-container">
+    <section className="container page-container page-favorites">
       <Spinner visible={loading} />
 
-      <Pagination total={pageCount} page={page} onChangePage={handleChangePage} />
+      <Pagination
+        total={pageCount}
+        page={page}
+        onChangePage={handleChangePage}
+        buttonAs={Button}
+      />
 
-      <table>
+      <Table>
         <thead>
           <tr>
             <th>Name</th>
@@ -62,7 +69,7 @@ function Favorites() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </section>
   );
 }
