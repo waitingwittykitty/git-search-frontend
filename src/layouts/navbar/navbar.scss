@@ -27,15 +27,16 @@
         display: inline-block;
         line-height: 24px;
         vertical-align: middle;
-        color: rgba(0, 0, 0, 0.87);
+        color: #abb2e1;
         text-decoration: none;
+        font-weight: bold;
 
         &:hover {
-          text-decoration: underline;
+          color: #3d57b1;
         }
 
         &.active {
-          color: #2ac4ea;
+          color: #3a417a;
           pointer-events: none;
           cursor: default;
         }
