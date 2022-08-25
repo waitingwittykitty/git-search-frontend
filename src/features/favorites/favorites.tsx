@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -7,7 +7,6 @@ import Pagination from '../../components/pagination/pagination';
 import Spinner from '../../components/spinner/spinner';
 import Table from '../../components/table/table';
 import {
-  fetchFavoritesCountAsync,
   fetchFavoritesAsync,
   selectFavoritesLoading,
   selectFavoritesPageCount,
@@ -24,10 +23,13 @@ function Favorites() {
   const page = Number(searchParams.get('page')) || 1;
   const perPage = Number(searchParams.get('height')) || 10;
   const pageCount = useAppSelector(selectFavoritesPageCount(perPage));
+  const forks = useMemo(
+    () => result?.slice((page - 1) * perPage, page * perPage),
+    [result, page, perPage]
+  );
 
   useEffect(() => {
-    dispatch(fetchFavoritesAsync({ page, perPage }));
-    dispatch(fetchFavoritesCountAsync());
+    dispatch(fetchFavoritesAsync());
   }, [dispatch, page, perPage]);
 
   const handleChangePage = (page: number) => {
@@ -58,16 +60,22 @@ function Favorites() {
           </tr>
         </thead>
         <tbody>
-          {result.map(fork => (
-            <tr key={fork.id}>
-              <td>{fork.name}</td>
-              <td>{fork.owner}</td>
-              <td>{fork.stars}</td>
-              <td>
-                <a href={fork.link}>{fork.link}</a>
-              </td>
+          {forks && forks.length > 0 ? (
+            forks.map(fork => (
+              <tr key={fork.id}>
+                <td>{fork.name}</td>
+                <td>{fork.owner}</td>
+                <td>{fork.stars}</td>
+                <td>
+                  <a href={fork.link}>{fork.link}</a>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={4}>No results</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
     </section>

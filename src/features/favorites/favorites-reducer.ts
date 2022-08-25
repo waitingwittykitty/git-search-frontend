@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import {
-  fetchFavoritesCount,
-  fetchFavorites,
-  addFavorite,
-  removeFavorite,
-} from './favorites-api';
+import { fetchFavorites, addFavorite, removeFavorite } from './favorites-api';
 
 export type Fork = {
   id: number;
@@ -16,34 +11,19 @@ export type Fork = {
 };
 
 export interface FavoritesState {
-  total: number;
-  page: number;
-  query: string;
   result: Fork[];
   status: 'idle' | 'loading' | 'failed';
 }
 
 const initialState: FavoritesState = {
-  total: 0,
-  page: 1,
-  query: '',
   result: [],
   status: 'idle',
 };
 
-export const fetchFavoritesAsync = createAsyncThunk(
-  'favorites/fetch',
-  async ({ page = 1, perPage = 10 }: { page: number; perPage: number }) => {
-    const favorites = await fetchFavorites({ page, perPage });
+export const fetchFavoritesAsync = createAsyncThunk('favorites/fetch', async () => {
+  const favorites = await fetchFavorites();
 
-    return favorites;
-  }
-);
-
-export const fetchFavoritesCountAsync = createAsyncThunk('favorites/count', async () => {
-  const count = await fetchFavoritesCount();
-
-  return count;
+  return favorites;
 });
 
 export const addFavoriteAsync = createAsyncThunk('favorites/add', async (fork: Fork) => {
@@ -73,17 +53,6 @@ export const FavoritesSlice = createSlice({
       .addCase(fetchFavoritesAsync.rejected, state => {
         state.status = 'failed';
         state.result = [];
-      })
-      .addCase(fetchFavoritesCountAsync.pending, state => {
-        state.status = 'loading';
-      })
-      .addCase(fetchFavoritesCountAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.total = action.payload;
-      })
-      .addCase(fetchFavoritesCountAsync.rejected, state => {
-        state.status = 'failed';
-        state.total = 0;
       });
   },
 });
@@ -93,8 +62,8 @@ export const selectFavoritesLoading = (state: RootState) =>
   state.favorites.status === 'loading';
 export const selectFavoritesFailed = (state: RootState) =>
   state.favorites.status === 'failed';
-export const selectFavoritesTotal = (state: RootState) => state.favorites.total;
+export const selectFavoritesTotal = (state: RootState) => state.favorites.result.length;
 export const selectFavoritesPageCount = (perPage: number) => (state: RootState) =>
-  Math.ceil(state.favorites.total / perPage);
+  Math.ceil(state.favorites.result.length / perPage);
 
 export default FavoritesSlice.reducer;
