@@ -126,7 +126,7 @@ function Search() {
 
       <Modal isOpened={isConfirmOpened} toggle={toggleConfirm}>
         <Confirm
-          title="Add to Favorite"
+          title="Add to Favorites"
           description={`Are you sure you want to add this fork (${selectedFork?.owner}/${selectedFork?.name}) to your favorites?`}
           onOk={handleConfirmAddFavorite}
           toggle={toggleConfirm}
