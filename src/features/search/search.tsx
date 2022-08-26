@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -11,7 +11,6 @@ import Spinner from '../../components/spinner/spinner';
 import Table from '../../components/table/table';
 import { addFavoriteAsync } from '../favorites/favorites-reducer';
 import {
-  fetchForksCountAsync,
   Fork,
   searchAsync,
   selectSearchLoading,
@@ -23,24 +22,25 @@ import {
 import './search.scss';
 
 function Search() {
-  const result = useAppSelector(selectSearchResult);
-  const loading = useAppSelector(selectSearchLoading);
-  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('word') || '';
   const page = Number(searchParams.get('page')) || 1;
   const perPage = Number(searchParams.get('height')) || 10;
+  const dispatch = useAppDispatch();
+  const result = useAppSelector(selectSearchResult);
+  const loading = useAppSelector(selectSearchLoading);
   const total = useAppSelector(selectSearchTotal);
   const pageCount = useAppSelector(selectSearchPageCount(perPage));
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
   const [selectedFork, setSelectedFork] = useState<Fork | null>(null);
+  const forks = useMemo(
+    () => result?.slice((page - 1) * perPage, page * perPage),
+    [result, page, perPage]
+  );
 
   useEffect(() => {
-    if (query) {
-      dispatch(searchAsync({ query, page, perPage }));
-      dispatch(fetchForksCountAsync(query));
-    }
-  }, [dispatch, query, page, perPage]);
+    dispatch(searchAsync(query));
+  }, [dispatch, query]);
 
   const handleChangePage = (page: number) => {
     setSearchParams({
@@ -93,8 +93,8 @@ function Search() {
           </tr>
         </thead>
         <tbody>
-          {result && result.length > 0 ? (
-            result.map(fork => (
+          {forks && forks.length > 0 ? (
+            forks.map(fork => (
               <tr key={fork.id}>
                 <td>{fork.name}</td>
                 <td>{fork.owner}</td>
