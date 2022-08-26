@@ -1,5 +1,7 @@
 .modal {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
   position: fixed;
   z-index: 1;
@@ -14,13 +16,12 @@
 
   &.opened {
     pointer-events: all;
-    display: block;
     opacity: 1;
   }
 
   .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
