@@ -5,7 +5,7 @@
   z-index: 2;
   right: 20px;
   top: 20px;
-  width: 200px;
+  width: 320px;
   overflow: auto;
   opacity: 0;
   transition: ease all 0.3s;
@@ -21,6 +21,7 @@
     color: white;
     padding: 20px;
     width: 80%;
+    border-radius: 3px;
   }
 
   .close {
