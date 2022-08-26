@@ -32,7 +32,13 @@ function SearchForm() {
           <span className="image-container">
             <img src={Search} alt="search" />
           </span>
-          <input type="text" name="word" value={word} onChange={handleChangeWord} />
+          <input
+            type="text"
+            name="word"
+            value={word}
+            placeholder="Enter the full name (owner/repo) of a repository to find forks. e.g. vue/vue"
+            onChange={handleChangeWord}
+          />
           <button type="submit">Search</button>
         </div>
       </form>
