@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -11,6 +11,7 @@ import Spinner from '../../components/spinner/spinner';
 import Table from '../../components/table/table';
 import { addFavoriteAsync } from '../favorites/favorites-reducer';
 import {
+  fetchForksCountAsync,
   Fork,
   searchAsync,
   selectSearchLoading,
@@ -27,20 +28,19 @@ function Search() {
   const page = Number(searchParams.get('page')) || 1;
   const perPage = Number(searchParams.get('height')) || 10;
   const dispatch = useAppDispatch();
-  const result = useAppSelector(selectSearchResult);
+  const forks = useAppSelector(selectSearchResult);
   const loading = useAppSelector(selectSearchLoading);
   const total = useAppSelector(selectSearchTotal);
   const pageCount = useAppSelector(selectSearchPageCount(perPage));
   const [isConfirmOpened, setIsConfirmOpened] = useState(false);
   const [selectedFork, setSelectedFork] = useState<Fork | null>(null);
-  const forks = useMemo(
-    () => result?.slice((page - 1) * perPage, page * perPage),
-    [result, page, perPage]
-  );
 
   useEffect(() => {
-    dispatch(searchAsync(query));
-  }, [dispatch, query]);
+    if (query) {
+      dispatch(searchAsync({ query, page, perPage }));
+      dispatch(fetchForksCountAsync(query));
+    }
+  }, [dispatch, query, page, perPage]);
 
   const handleChangePage = (page: number) => {
     setSearchParams({
