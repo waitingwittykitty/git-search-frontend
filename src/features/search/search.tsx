@@ -36,11 +36,12 @@ function Search() {
   const [selectedFork, setSelectedFork] = useState<Fork | null>(null);
 
   useEffect(() => {
-    if (query) {
-      dispatch(searchAsync({ query, page, perPage }));
-      dispatch(fetchForksCountAsync(query));
-    }
+    dispatch(searchAsync({ query, page, perPage }));
   }, [dispatch, query, page, perPage]);
+
+  useEffect(() => {
+    dispatch(fetchForksCountAsync(query));
+  }, [dispatch, query]);
 
   const handleChangePage = (page: number) => {
     setSearchParams({

@@ -41,10 +41,30 @@ export async function fetchForksCount({
   owner,
   repo,
 }: FetchForksCountParams): Promise<number> {
-  const response = await octokit.rest.repos.get({
+  const {
+    data: { forks_count: forksCount },
+  } = await octokit.rest.repos.get({
     owner,
     repo,
   });
 
-  return response.data.forks_count;
+  let pageCount = Math.ceil(forksCount / 100);
+  let forks = await octokit.rest.repos.listForks({
+    owner,
+    repo,
+    per_page: 100,
+    page: pageCount,
+  });
+
+  while (pageCount > 0 && forks.data.length === 0) {
+    pageCount--;
+    forks = await octokit.rest.repos.listForks({
+      owner,
+      repo,
+      per_page: 100,
+      page: pageCount,
+    });
+  }
+
+  return pageCount && (pageCount - 1) * 100 + forks.data.length;
 }
